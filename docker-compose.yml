@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  vader:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    container_name: vader
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    #networks:
+    #  - frontend
