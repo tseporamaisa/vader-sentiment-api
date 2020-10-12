@@ -9,7 +9,5 @@ pub struct VaderScores {
     pub compound: f64,
 }
 
-#[derive(Deserialize,Debug)]
-pub struct RequestText {
-    pub text: Vec<String>,
-}
+#[derive(Deserialize, Serialize,Debug)]
+pub struct RequestText {pub text: Vec<String>} //(Vec<String>);
