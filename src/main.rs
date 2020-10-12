@@ -1,9 +1,12 @@
 mod models;
 mod vader;
-use crate::models::RequestText;
-use crate::models::VaderScores;
-use actix_web::{post, web, App, HttpResponse, HttpServer, Responder};
+use models::RequestText;
+use models::VaderScores;
+use actix_web::{middleware, post, web, App, HttpResponse, HttpServer, Responder};
 use vader::SentimentIntensityAnalyzer;
+
+
+
 
 #[post("/get_sentiment")]
 async fn get_sentiment(req_text: web::Json<RequestText>) -> impl Responder {
@@ -18,11 +21,14 @@ async fn get_sentiment(req_text: web::Json<RequestText>) -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    std::env::set_var("RUST_LOG", "actix_web=info");
+    env_logger::init();
     println!("starting server at http://0.0.0.0:8080/");
 
     HttpServer::new(|| {
         App::new()
             .data(web::JsonConfig::default().limit(9096000))
+            .wrap(middleware::Logger::default())
             .service(get_sentiment)
     })
     .bind("0.0.0.0:8080")?
