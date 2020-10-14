@@ -4,9 +4,7 @@ services:
     build:
         context: .
         dockerfile: Dockerfile
-    container_name: vader
+    container_name: vader_api
     restart: unless-stopped
     ports:
       - "8080:8080"
-    #networks:
-    #  - frontend

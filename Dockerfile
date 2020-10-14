@@ -1,13 +1,14 @@
 FROM rust:1.47.0 as build
 ENV PKG_CONFIG_ALLOW_CROSS=1
 
-WORKDIR /usr/src/vader_sentiment_api
-COPY . .
+WORKDIR /app
 
-RUN cargo install --path .
+COPY . /app
 
-FROM gcr.io/distroless/cc-debian10
+RUN cargo build --release
 
-COPY --from=build /usr/local/cargo/bin/vader_sentiment_api /usr/local/bin/vader_sentiment_api
+FROM gcr.io/distroless/cc
 
-CMD ["vader_sentiment_api"]
+COPY --from=build /app/target/release/vader_sentiment_api /
+
+CMD ["./vader_sentiment_api"]

@@ -1,8 +1,8 @@
-# VADER-Sentiment-Analysis
+# VADER-Sentiment-Analysis-API
 
 
 
-VADER (Valence Aware Dictionary and sEntiment Reasoner) is a lexicon and rule-based sentiment analysis tool that is *specifically attuned to sentiments expressed in social media*. It is fully open-sourced under the [MIT License](http://choosealicense.com/). **This is a port of the original module**, which was written in Python. If you'd like to make a contribution, please checkout  [the original author's work here](https://github.com/cjhutto/vaderSentiment).
+VADER (Valence Aware Dictionary and sEntiment Reasoner) is a lexicon and rule-based sentiment analysis tool that is *specifically attuned to sentiments expressed in social media*. It is fully open-sourced under the [MIT License](http://choosealicense.com/). [The original module](https://github.com/cjhutto/vaderSentiment) was written in Python and [ported to Rust](https://github.com/ckw017/vader-sentiment-rust). This is a web server exposing a REST Interface for the Rust port.
 
 # Use Cases
 	* examples of typical use cases for sentiment analysis, including proper handling of sentences with:
@@ -25,51 +25,38 @@ VADER (Valence Aware Dictionary and sEntiment Reasoner) is a lexicon and rule-ba
 
 # Usage
 
-### Code
-```rust
-  extern crate vader_sentiment;
+## With docker-compose
+``` bash
+docker-compose up -d
 
-  fn main() {
-      let analyzer = vader_sentiment::SentimentIntensityAnalyzer::new();
-      println!("{:#?}", analyzer.polarity_scores("VADER is smart, handsome, and funny."));
-      println!("{:#?}", analyzer.polarity_scores("VADER is VERY SMART, handsome, and FUNNY."));
-  }
-```
+curl -H "Content-Type: application/json" -X POST -d '{"text":["VADER is smart, handsome, and funny.","At least it is not a horrible book."]}' http://127.0.0.1:8080/get_sentiment
 
+```    
 ### Output
+``` json
+[
+    {
+        "text": "VADER is smart, handsome, and funny.",
+        "neg": 0.0,
+        "neu": 0.2542372881355932,
+        "pos": 0.7457627118644068,
+        "compound": 0.8316320352807864
+    },
+    {
+        "text": "At least it is not a horrible book.",
+        "neg": 0.0,
+        "neu": 0.6779661016949153,
+        "pos": 0.3220338983050848,
+        "compound": 0.43102002306105164
+    }
+]
+```   
+## Natively    
+
 ``` rust
-{
-    "compound": 0.8316320352807864,
-    "pos": 0.7457627118644068,
-    "neg": 0.0,
-    "neu": 0.2542372881355932
-}
-{
-    "compound": 0.9226571915792521,
-    "pos": 0.7540988645515071,
-    "neg": 0.0,
-    "neu": 0.24590113544849293
-}
-```
+cargo run
+```    
 
-# Citation Information
-
-If you use either the dataset or any of the VADER sentiment analysis tools (VADER sentiment lexicon or Rust code for rule-based sentiment analysis engine) in your research, please cite the above paper. For example:  
-
-  **Hutto, C.J. & Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. Eighth International Conference on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.**
-
-For questions, please contact:
-C.J. Hutto
-Georgia Institute of Technology, Atlanta, GA 30032  
-cjhutto [at] gatech [dot] edu
-
-# Demo
-You can run a full demo including cases with sarcasm, negation, idioms, and punctuation with this code.
-
-```rust
-extern crate vader_sentiment;
-
-fn main() {
-    vader_sentiment::demo::run_demo();
-}
+``` bash
+curl -H "Content-Type: application/json" -X POST -d '{"text":["VADER is smart, handsome, and funny.","At least it is not a horrible book."]}' http://127.0.0.1:8080/get_sentiment
 ```

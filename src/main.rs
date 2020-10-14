@@ -1,12 +1,9 @@
 mod models;
 mod vader;
+use actix_web::{middleware, post, web, App, HttpResponse, HttpServer, Responder};
 use models::RequestText;
 use models::VaderScores;
-use actix_web::{middleware, post, web, App, HttpResponse, HttpServer, Responder};
 use vader::SentimentIntensityAnalyzer;
-
-
-
 
 #[post("/get_sentiment")]
 async fn get_sentiment(req_text: web::Json<RequestText>) -> impl Responder {
@@ -27,8 +24,11 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(|| {
         App::new()
+            // overide default 256kb payload limit with arbitrarily high value
             .data(web::JsonConfig::default().limit(9096000))
-            .wrap(middleware::Logger::default())
+            .wrap(middleware::Logger::new(
+                "%t %r %s %b %{Referer}i %{User-Agent}i %T",
+            ))
             .service(get_sentiment)
     })
     .bind("0.0.0.0:8080")?
