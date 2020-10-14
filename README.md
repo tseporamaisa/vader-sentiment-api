@@ -2,7 +2,7 @@
 
 
 
-VADER (Valence Aware Dictionary and sEntiment Reasoner) is a lexicon and rule-based sentiment analysis tool that is *specifically attuned to sentiments expressed in social media*. It is fully open-sourced under the [MIT License](http://choosealicense.com/). [The original module](https://github.com/cjhutto/vaderSentiment) was written in Python and [ported to Rust](https://github.com/ckw017/vader-sentiment-rust). This is a web server exposing a REST Interface for the Rust port.
+VADER (Valence Aware Dictionary and sEntiment Reasoner) is a lexicon and rule-based sentiment analysis tool that is *specifically attuned to sentiments expressed in social media*. It is fully open-sourced under the [MIT License](http://choosealicense.com/). [The original module](https://github.com/cjhutto/vaderSentiment) was written in Python and [ported to Rust](https://github.com/ckw017/vader-sentiment-rust). This is a web server exposing a REST Interface for the Rust port (including [pull requests](https://github.com/ckw017/vader-sentiment-rust/pulls) by ambaxter).
 
 # Use Cases
 	* examples of typical use cases for sentiment analysis, including proper handling of sentences with:
