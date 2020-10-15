@@ -54,7 +54,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"text":["VADER is smart, h
 ## Natively    
 
 ``` rust
-cargo run
+cargo run --release
 ```    
 
 ``` bash
