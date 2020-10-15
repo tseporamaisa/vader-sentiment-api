@@ -59,7 +59,8 @@ cargo run --release
 
 ``` bash
 curl -H "Content-Type: application/json" -X POST -d '{"text":["VADER is smart, handsome, and funny.","At least it is not a horrible book."]}' http://127.0.0.1:8080/get_sentiment
-```     
+```      
+
    
 > **⚠ WARNING: No security.**  
-> There are no security measures taken here so it is not a good idea to expose the server directly to the internet. If used as is expose only to trusted clients inside trusted environments. 
+> There are no security measures taken here so it is not a good idea to expose the server directly to the internet. If used as is, expose only to trusted clients inside trusted environments. 
